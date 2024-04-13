@@ -18,33 +18,34 @@ export class AuthDatasourceImpl implements AuthDatasource {
     private readonly comparePassword: ConpareFunction = BcryptAdapter.compare,
   ) { }
   async update(updateUserDto: UpdateUserDto): Promise<UserEntity> {
-    const { id, ...rest } = updateUserDto;
+    const { id, email, address, district, province, phone } = updateUserDto;
 
     try {
+
+      const [existsEmail, existsId] = await Promise.all([
+        prisma.user.findFirst({ where: { email } }),
+        prisma.user.findFirst({ where: { id } }),
+      ])
+
       //1. verificar si el correo existe
-      const existsEmail = await prisma.user.findFirst({ where: { email: rest.email } });
-      if (rest.email && existsEmail) {
+      if (email && existsEmail) {
         throw CustomError.badRequest('User already exists');
       }
       //2. verificar si el id existe
-      const existsId = await prisma.user.findFirst({ where: { id } });
       if (!existsId || !existsId!.status) {
         throw CustomError.badRequest('User not exists');
       }
 
-      if (rest.password) {
-        rest.password = this.hashPassword(rest.password);
-      }
-
-
-
       const user = await prisma.user.update({
         where: { id },
         data: {
-          name: rest.name ? rest.name : existsId!.name,
-          email: rest.email ? rest.email : existsId!.email,
-          password: rest.password ? rest.password : existsId!.password,
+          address: address ? address : existsId!.address,
+          district: district ? district : existsId!.district,
+          province: province ? province : existsId!.province,
+          phone: phone ? phone : existsId!.phone,
+          email: email ? email : existsId!.email,
         },
+        include: { role: true },
       });
 
       return UserMapper.userEntityFromObject(user)

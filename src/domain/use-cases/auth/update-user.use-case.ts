@@ -8,7 +8,14 @@ interface UserUpdate {
   user: {
     id: string;
     name: string;
+    lastName: string;
     email: string;
+    dni: string;
+    role?: string;
+    address?: string;
+    district?: string;
+    province?: string;
+    phone?: string;
   }
 }
 
@@ -31,7 +38,14 @@ export class UpdateUser implements UpdateUseUseCase {
       user: {
         id: user.id,
         name: user.name,
+        lastName: user.lastName,
         email: user.email,
+        dni: user.dni,
+        role: user.role,
+        address: user.address,
+        district: user.district,
+        province: user.province,
+        phone: user.phone,
       }
     }
   }
