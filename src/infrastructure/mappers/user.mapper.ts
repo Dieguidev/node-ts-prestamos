@@ -9,7 +9,7 @@ export class UserMapper {
 
 
 
-    const { id, _id, name, email, password, role, img } = object;
+    const { id, _id, name, email, password, dni, lastName, address, district, phone, province, roleId } = object;
 
     if (!id && !_id) {
       throw CustomError.badRequest('Missing id');
@@ -20,7 +20,7 @@ export class UserMapper {
 
     if (!password) throw CustomError.badRequest('Missing password');
 
-    if (!role) throw CustomError.badRequest('Missing role');
+    if (!roleId) throw CustomError.badRequest('Missing role');
 
 
 
@@ -29,8 +29,13 @@ export class UserMapper {
       name,
       email,
       password,
-      role,
-      img
+      dni,
+      lastName,
+      address,
+      district,
+      phone,
+      province,
+      roleId
     );
 
   }

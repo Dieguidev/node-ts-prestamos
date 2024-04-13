@@ -15,17 +15,32 @@ datasource db {
 
 model User {
   id        String   @id @default(uuid())
+  dni       String   @db.VarChar @unique
   email     String   @unique
   name      String   @db.VarChar
+  lastName  String   @map(name: "last_name") @db.VarChar
   password  String   @db.VarChar
-  role      Role[]   @default([USER_ROLE])
-  status    Boolean @default(true)
+  address   String   @db.VarChar
+  district  String   @db.VarChar
+  province  String   @db.VarChar
+  phone     String   @db.VarChar
+  status    Boolean  @default(true)
   img       String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  role      Role     @relation(fields: [roleId], references: [id])
+  roleId    Int      @map(name: "role_id")
+
+  @@map("users")
 }
 
-enum Role {
-  USER_ROLE
-  ADMIN_ROLE
+model Role {
+  id     Int     @id @default(autoincrement())
+  role   String  @db.VarChar
+  status Boolean @default(true)
+  User   User[]
+
+  @@map("role")
 }
+
+// 1.	Los agentes pueden agregar clientes registrando los datos como DNI, Nombre y Apellido, dirección, distrito, provincia, teléfono, correo y estado.

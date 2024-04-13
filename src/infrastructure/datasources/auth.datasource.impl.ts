@@ -21,10 +21,6 @@ export class AuthDatasourceImpl implements AuthDatasource {
     const { id, ...rest } = updateUserDto;
 
     try {
-
-
-
-
       //1. verificar si el correo existe
       const existsEmail = await prisma.user.findFirst({ where: { email: rest.email } });
       if (rest.email && existsEmail) {
@@ -40,17 +36,18 @@ export class AuthDatasourceImpl implements AuthDatasource {
         rest.password = this.hashPassword(rest.password);
       }
 
-      const role: Role = Role[rest.role as unknown as keyof typeof Role];
+
 
       const user = await prisma.user.update({
         where: { id },
         data: {
-          ...rest,
-          role: (role) ? [role]: existsId!.role,
+          name: rest.name ? rest.name : existsId!.name,
+          email: rest.email ? rest.email : existsId!.email,
+          password: rest.password ? rest.password : existsId!.password,
         },
       });
 
-      return UserMapper.userEntityFromObject(user as UserEntity)
+      return UserMapper.userEntityFromObject(user)
 
     } catch (error) {
       if (error instanceof CustomError) {
@@ -98,20 +95,37 @@ export class AuthDatasourceImpl implements AuthDatasource {
 
   async register(registerUserDto: RegisterUserDto): Promise<UserEntity> {
 
-    const { name, email, password } = registerUserDto;
+    const { name, email, password, dni, lastName, address, district, phone, province } = registerUserDto;
 
     try {
 
       //1. verificar si el correo existe
       const existsEmail = await prisma.user.findUnique({ where: { email } });
       if (existsEmail) {
-        throw CustomError.badRequest('User already exists');
+        throw CustomError.badRequest('Email already exists');
       }
 
+      const existsDni = await prisma.user.findFirst({ where: { dni } });
+      if (existsDni) {
+        throw CustomError.badRequest('Dni already exists');
+      }
 
-      //2. hash de contraseña
+      const role = await prisma.role.findFirst({ where: { role: "CLIENT" } })
+
+
       const user = await prisma.user.create({
-        data: { name, email, password: this.hashPassword(password) },
+        data: {
+          name,
+          email,
+          password: this.hashPassword(password),
+          dni,
+          lastName,
+          address: address ? address : '',
+          district: district ? district : '',
+          phone: phone ? phone : '',
+          province: province ? province : '',
+          roleId: role!.id,
+        },
       });
 
 
@@ -119,6 +133,8 @@ export class AuthDatasourceImpl implements AuthDatasource {
       return UserMapper.userEntityFromObject(user)
 
     } catch (error) {
+      console.log(error);
+
       if (error instanceof CustomError) {
         throw error;
       }
