@@ -10,11 +10,12 @@ export class UserEntity {
     public email: string,
     public dni: string,
     public password: string,
+    public roleId: number,
+    public role?: string,
     public address?: string,
     public district?: string,
     public province?: string,
     public phone?: string,
-    public role?: number,
     public status?: boolean,
   ) {}
 }

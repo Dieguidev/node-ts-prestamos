@@ -8,7 +8,14 @@ interface UserToken {
   user: {
     id: string;
     name: string;
+    lastName: string;
     email: string;
+    dni: string;
+    role?: string;
+    address?: string;
+    district?: string;
+    province?: string;
+    phone?: string;
   }
 }
 
@@ -30,6 +37,9 @@ export class RegisterUser implements RegisterUserUseCase {
     //crear usuario en la base de datos
     const user = await this.authRepository.register(registerUserDto);
 
+    // console.log(user);
+
+
     //token
     const token = await this.signToken({id:user.id},'2h');
     if (!token) throw CustomError.internalServer('Error generating token');
@@ -40,7 +50,14 @@ export class RegisterUser implements RegisterUserUseCase {
       user: {
         id: user.id,
         name: user.name,
+        lastName: user.lastName,
         email: user.email,
+        dni: user.dni,
+        role: user.role,
+        address: user.address,
+        district: user.district,
+        province: user.province,
+        phone: user.phone,
       }
     }
   }

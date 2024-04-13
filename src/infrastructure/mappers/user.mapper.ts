@@ -7,9 +7,7 @@ export class UserMapper {
 
   static userEntityFromObject(object: { [key: string]: any }): UserEntity {
 
-
-
-    const { id, _id, name, email, password, dni, lastName, address, district, phone, province, roleId } = object;
+    const { id, _id, name, email, password, dni, lastName, address, district, phone, province, roleId, role } = object;
 
     if (!id && !_id) {
       throw CustomError.badRequest('Missing id');
@@ -27,15 +25,16 @@ export class UserMapper {
     return new UserEntity(
       id || _id,
       name,
-      email,
-      password,
-      dni,
       lastName,
+      email,
+      dni,
+      password,
+      roleId,
+      role.role,
       address,
       district,
-      phone,
       province,
-      roleId
+      phone,
     );
 
   }

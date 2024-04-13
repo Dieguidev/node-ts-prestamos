@@ -42,7 +42,8 @@ export class RegisterUserDto {
       address,
       district,
       province,
-      phone,)];
+      phone,
+    )];
 
   }
 }
