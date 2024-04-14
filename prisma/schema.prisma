@@ -15,7 +15,7 @@ datasource db {
 
 model User {
   id        String   @id @default(uuid())
-  dni       String   @db.VarChar @unique
+  dni       String   @unique @db.VarChar
   email     String   @unique
   name      String   @db.VarChar
   lastName  String   @map(name: "last_name") @db.VarChar
@@ -30,17 +30,47 @@ model User {
   updatedAt DateTime @updatedAt
   role      Role     @relation(fields: [roleId], references: [id])
   roleId    Int      @map(name: "role_id")
+  Loans     Loans[]
 
   @@map("users")
 }
 
 model Role {
-  id     Int     @id @default(autoincrement())
-  role   String  @db.VarChar
-  status Boolean @default(true)
-  User   User[]
+  id        Int      @id @default(autoincrement())
+  role      String   @db.VarChar
+  status    Boolean  @default(true)
+  User      User[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("role")
+}
+
+model Loans {
+  id                  String                @id @default(uuid())
+  months              Int
+  money               Decimal
+  interest            Decimal
+  user                User                  @relation(fields: [userId], references: [id])
+  userId              String                @map("user_id")
+  MonthlyInstallments MonthlyInstallments[]
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+
+  @@map("loans")
+}
+
+model MonthlyInstallments {
+  id             String   @id @default(uuid())
+  quotaNumber    Int      @map("quota_number")
+  monthlyPayment Decimal  @map("monthly_payment")
+  dueDate        DateTime @map("due_date")
+  loan           Loans    @relation(fields: [loanId], references: [id])
+  loanId         String   @map("loan_id")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("monthly_installments")
 }
 
 // 1.	Los agentes pueden agregar clientes registrando los datos como DNI, Nombre y Apellido, dirección, distrito, provincia, teléfono, correo y estado.
