@@ -17,6 +17,7 @@ export class UserEntity {
     public province?: string,
     public phone?: string,
     public status?: boolean,
+    public loans?: string[]
   ) {}
 }
 

@@ -21,7 +21,6 @@ export class UserMapper {
     if (!roleId) throw CustomError.badRequest('Missing role');
 
 
-
     return new UserEntity(
       id || _id,
       name,
