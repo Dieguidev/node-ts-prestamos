@@ -34,11 +34,11 @@ export class CreateLoan implements CreateLoanUseCase {
       loan: {
         id: loan.id,
         months: loan.months,
-        money: loan.money,
-        interest: loan.interest,
+        money: +loan.money,
+        interest: +loan.interest,
         userId: loan.userId,
-        monthlyInstallments: loan.monthlyInstallments,
         totalDebt: loan.totalDebt,
+        monthlyInstallments: loan.monthlyInstallments,
       }
     }
   }

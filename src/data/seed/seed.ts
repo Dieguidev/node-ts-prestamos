@@ -22,9 +22,10 @@ async function main() {
 
   //eliminar todo de la base de datos - warning
   await Promise.all([
+    prisma.monthlyInstallments.deleteMany(),
     prisma.loans.deleteMany(),
-    prisma.user.deleteMany(),
     prisma.role.deleteMany(),
+    prisma.user.deleteMany(),
   ])
 
   //crear roles del seed.ts

@@ -24,9 +24,9 @@ export class CreateLoanDto {
     if (!Validators.isValidUUID(userId)) return ['Invalid Id']
 
     return [undefined, new CreateLoanDto(
-      months,
-      money,
-      interest,
+      +months,
+      +money,
+      +interest,
       userId
     )];
 

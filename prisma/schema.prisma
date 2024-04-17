@@ -49,11 +49,11 @@ model Role {
 model Loans {
   id                  String                @id @default(uuid())
   months              Int
-  money               Decimal
-  interest            Decimal
+  money               Decimal               @db.Decimal(10, 2)
+  interest            Decimal               @db.Decimal(10, 2)
   user                User                  @relation(fields: [userId], references: [id])
   userId              String                @map("user_id")
-  MonthlyInstallments MonthlyInstallments[]
+  monthlyInstallments MonthlyInstallments[]
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
 
@@ -63,8 +63,9 @@ model Loans {
 model MonthlyInstallments {
   id             String   @id @default(uuid())
   quotaNumber    Int      @map("quota_number")
-  monthlyPayment Decimal  @map("monthly_payment")
+  monthlyPayment Decimal  @map("monthly_payment") @db.Decimal(10, 2)
   dueDate        DateTime @map("due_date")
+  paymentStatus  Boolean  @default(false)
   loan           Loans    @relation(fields: [loanId], references: [id])
   loanId         String   @map("loan_id")
   createdAt      DateTime @default(now())
