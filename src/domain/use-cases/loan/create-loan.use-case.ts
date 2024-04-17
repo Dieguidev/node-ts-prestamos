@@ -11,8 +11,9 @@ interface Loan {
     money: number;
     interest: number;
     userId: string;
-    monthlyInstallments: string[];
     totalDebt: number;
+    status: boolean;
+    monthlyInstallments: string[];
   }
 }
 
@@ -38,6 +39,7 @@ export class CreateLoan implements CreateLoanUseCase {
         interest: +loan.interest,
         userId: loan.userId,
         totalDebt: loan.totalDebt,
+        status: loan.status,
         monthlyInstallments: loan.monthlyInstallments,
       }
     }

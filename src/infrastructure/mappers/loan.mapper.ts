@@ -4,7 +4,7 @@ import { CustomError, LoanEntity } from "../../domain";
 
 export class LoanMapper {
   static loanEntityFromObject(object: { [key: string]: any }): LoanEntity {
-    const { id, _id, interest, months, money, userId, monthlyInstallments, totalDebt } = object;
+    const { id, _id, interest, months, money, userId, monthlyInstallments, totalDebt, status } = object;
 
     if (!id && !_id) {
       throw CustomError.badRequest('Missing id');
@@ -16,6 +16,6 @@ export class LoanMapper {
     if (!monthlyInstallments) throw CustomError.badRequest('Missing MonthlyInstallments');
     if (!totalDebt) throw CustomError.badRequest('Missing totalDebt');
 
-    return new LoanEntity(id || _id, months, money, interest, userId, monthlyInstallments, totalDebt);
+    return new LoanEntity(id || _id, months, money, interest, userId, monthlyInstallments, totalDebt, status);
   }
 }

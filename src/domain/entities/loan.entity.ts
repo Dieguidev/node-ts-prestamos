@@ -10,6 +10,7 @@ export class LoanEntity {
     public interest: number,
     public userId: string,
     public monthlyInstallments: string[],
-    public totalDebt: number
+    public totalDebt: number,
+    public status: boolean
   ) {}
 }

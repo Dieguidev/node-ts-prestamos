@@ -53,6 +53,7 @@ model Loans {
   interest            Decimal               @db.Decimal(10, 2)
   user                User                  @relation(fields: [userId], references: [id])
   userId              String                @map("user_id")
+  status              Boolean               @default(true)
   monthlyInstallments MonthlyInstallments[]
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
