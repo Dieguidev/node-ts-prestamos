@@ -6,7 +6,7 @@ export class AuthRepositoryImpl implements AuthRepository {
 
   constructor(
     private readonly authDatasource: AuthDatasource,
-  ) {}
+  ) { }
   update(updateUserDto: UpdateUserDto): Promise<UserEntity> {
     return this.authDatasource.update(updateUserDto);
   }

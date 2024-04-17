@@ -9,6 +9,7 @@ export class LoanEntity {
     public money: number,
     public interest: number,
     public userId: string,
-    public MonthlyInstallments: string[]
+    public monthlyInstallments: string[],
+    public totalDebt: number
   ) {}
 }
