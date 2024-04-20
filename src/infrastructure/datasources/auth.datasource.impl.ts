@@ -92,7 +92,9 @@ export class AuthDatasourceImpl implements AuthDatasource {
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;
+
       }
+      console.log(error);
       throw CustomError.internalServer();
     }
   }

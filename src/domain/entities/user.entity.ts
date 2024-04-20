@@ -11,7 +11,6 @@ export class UserEntity {
     public dni: string,
     public password: string,
     public roleId: number,
-    public role?: string,
     public address?: string,
     public district?: string,
     public province?: string,
