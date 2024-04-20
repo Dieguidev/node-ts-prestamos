@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { AuthRepository, CustomError, DeleteUser, GetAndDeleteUserDto, LoginUser, LoginUserDto, RegisterUser, RegisterUserDto, UpdateUser, UpdateUserDto } from "../../domain"
+import { prisma } from "../../data/postgresql";
 
 
 
@@ -67,11 +68,11 @@ export class AuthController {
       .catch(error => this.handleError(error, res));
   }
 
-  // getUsers = (req: Request, res: Response) => {
-  //   UserModel.find()
-  //     .then(users => res.json({
-  //       user: req.body.user
-  //     }))
-  //     .catch(error => this.handleError(error, res))
-  // }
+  getUsers = (req: Request, res: Response) => {
+    prisma.user.findMany()
+      .then(users => res.json({
+        users
+      }))
+      .catch(error => this.handleError(error, res))
+  }
 }
