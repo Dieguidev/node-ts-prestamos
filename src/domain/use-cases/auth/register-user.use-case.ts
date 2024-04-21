@@ -11,7 +11,6 @@ interface UserToken {
     lastName: string;
     email: string;
     dni: string;
-    role?: string;
     address?: string;
     district?: string;
     province?: string;
@@ -53,7 +52,6 @@ export class RegisterUser implements RegisterUserUseCase {
         lastName: user.lastName,
         email: user.email,
         dni: user.dni,
-        role: user.role,
         address: user.address,
         district: user.district,
         province: user.province,
