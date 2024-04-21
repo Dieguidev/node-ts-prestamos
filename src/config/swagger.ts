@@ -15,7 +15,7 @@ export const swaggerSpec = swaggerJSDoc({
       }
     ]
   },
-  apis: ['./src/presentation/auth/auth.routes.ts']
+  apis: ['./src/presentation/auth/auth.routes.ts', './src/presentation/loan/loan.routes.ts']
 });
 
 
