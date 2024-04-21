@@ -1,4 +1,5 @@
 import swaggerJSDoc from "swagger-jsdoc";
+import { envs } from "./envs";
 
 
 export const swaggerSpec = swaggerJSDoc({
@@ -11,7 +12,7 @@ export const swaggerSpec = swaggerJSDoc({
     },
     servers: [
       {
-        url: 'http://localhost:3000'
+        url: envs.URL_SWAGGER
       }
     ]
   },
